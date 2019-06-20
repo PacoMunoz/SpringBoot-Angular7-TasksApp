@@ -1,0 +1,11 @@
+.completed {
+    text-decoration: line-through;
+}
+.name {
+    margin-left: 5px;
+}
+.date-badge{
+  margin-top: 3px;
+  height: 21px;
+}
+

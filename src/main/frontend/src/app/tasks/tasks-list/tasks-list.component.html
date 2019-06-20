@@ -1,0 +1,49 @@
+<ul class="list-group">
+    <li *ngFor="let task of tasks" class="list-group-item">
+        <div class="task-checkbox container">
+          <div class="row">
+            <!--<div class="col-md-12">
+              <input type="checkbox"
+                     (click)="onTaskChange($event, task)"
+                     [checked]="task.completed"/>
+            </div>-->
+            <div class="col-sm-12">
+              <span [ngClass]="task.completed ? 'name completed' : 'name'">{{task.name}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 d-flex flex-row-reverse">
+
+              <div *ngIf="task.inProcess && !task.completed" class="p-2">
+                <span class="badge date-badge badge-success ">In process</span>
+              </div>
+              <div *ngIf="!task.inProcess && !task.completed" class="p-2">
+                <span class=" badge date-badge badge-secondary ">Waiting</span>
+              </div>
+              <div class="p-2">
+                <span class="badge date-badge {{getCompletedLabel(task)}}">{{task.dueDate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-md-12 d-flex flex-row-reverse">
+              <div class="p-2">
+                <button class="btn btn-sm badge badge-warning " (click)="onTaskDelete($event, task)">Delete</button>
+              </div>
+              <div *ngIf="task.inProcess" class="p-2">
+                <button class="btn btn-sm  badge badge-warning" (click)="onTaskStop($event, task)">Stop</button>
+              </div>
+              <div *ngIf="!task.inProcess" class="p-2">
+                <button class="btn btn-sm  badge badge-warning" (click)="onTaskStart($event, task)">Start</button>
+              </div>
+              <div *ngIf="task.completed" class="p-2">
+                <button class="btn btn-sm badge {{getCompletedLabel(task)}}" (click)="onTaskRestart($event, task)" >Restart</button>
+              </div>
+              <div *ngIf="!task.completed" class="p-2">
+                <button class="btn btn-sm badge {{getCompletedLabel(task)}}" (click)="onTaskCompleted($event, task)" >Completed</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </li>
+</ul>
