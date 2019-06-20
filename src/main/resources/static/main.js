@@ -165,7 +165,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-12 d-flex justify-content-center\">\n    <countdown [config]=\"{leftTime: 6}\" #cd1 (event)=\"onEvent($event)\" (finished)=\"onFinished()\">$!m!:$!s!</countdown>\n  </div>\n  <div class=\"col-md-12 d-flex justify-content-center\">\n    <button (click)=\"cd1.pause()\" class=\"btn btn-link btn-sm\">pause</button>\n    <button (click)=\"cd1.resume()\" class=\"btn btn-link btn-sm\">resume</button>\n    <button (click)=\"cd1.stop()\" class=\"btn btn-link btn-sm\">stop</button>\n    <button (click)=\"cd1.restart()\" class=\"btn btn-link btn-sm\">restart</button>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-12 d-flex justify-content-center\">\n    <countdown [config]=\"{leftTime: 1500}\" #cd1 (event)=\"onEvent($event)\" (finished)=\"onFinished()\">$!m!:$!s!</countdown>\n  </div>\n  <div class=\"col-md-12 d-flex justify-content-center\">\n    <button (click)=\"cd1.pause()\" class=\"btn btn-link btn-sm\">pause</button>\n    <button (click)=\"cd1.resume()\" class=\"btn btn-link btn-sm\">resume</button>\n    <button (click)=\"cd1.stop()\" class=\"btn btn-link btn-sm\">stop</button>\n    <button (click)=\"cd1.restart()\" class=\"btn btn-link btn-sm\">restart</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -411,7 +411,7 @@ module.exports = ".completed {\n    text-decoration: line-through;\n}\n.name {\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"list-group\">\n    <li *ngFor=\"let task of tasks\" class=\"list-group-item\">\n        <div class=\"task-checkbox container\">\n\n          <div class=\"row\">\n            <div class=\"col-sm-1\">\n              <input type=\"checkbox\"\n                     (click)=\"onTaskChange($event, task)\"\n                     [checked]=\"task.completed\"/>\n            </div>\n            <div class=\"col-sm-10\">\n              <span [ngClass]=\"task.completed ? 'name completed' : 'name'\">{{task.name}}</span>\n            </div>\n            <div class=\"col-sm-1\">\n              <span class=\"float-right badge date-badge {{getDueDateLabel(task)}}\">{{task.dueDate}}</span>\n            </div>\n          </div>\n\n          <div class=\"row mt-3\">\n            <div class=\"col-md-12 d-flex justify-content-lg-end\">\n              <div *ngIf=\"task.inProcess\">\n                <span class=\"badge date-badge badge-success mr-2\">In process</span>\n                <span class=\"\"><button class=\"btn btn-sm mr-2 badge badge-warning\" (click)=\"onTaskStop($event, task)\">Stop</button></span>\n              </div>\n              <div *ngIf=\"!task.inProcess\">\n                <span class=\" badge date-badge badge-secondary mr-2\">Waiting</span>\n                <span class=\"\"><button class=\"btn btn-sm mr-2 badge badge-warning\" (click)=\"onTaskStart($event, task)\">Start</button></span>\n              </div>\n              <span class=\"\"><button class=\"btn btn-sm badge badge-warning\" (click)=\"onTaskDelete($event, task)\">Borrar</button></span>\n            </div>\n          </div>\n\n\n        </div>\n    </li>\n</ul>\n"
+module.exports = "<ul class=\"list-group\">\n    <li *ngFor=\"let task of tasks\" class=\"list-group-item\">\n        <div class=\"task-checkbox container\">\n          <div class=\"row\">\n            <!--<div class=\"col-md-12\">\n              <input type=\"checkbox\"\n                     (click)=\"onTaskChange($event, task)\"\n                     [checked]=\"task.completed\"/>\n            </div>-->\n            <div class=\"col-sm-12\">\n              <span [ngClass]=\"task.completed ? 'name completed' : 'name'\">{{task.name}}</span>\n            </div>\n          </div>\n          <div class=\"row\">\n            <div class=\"col-md-12 d-flex flex-row-reverse\">\n\n              <div *ngIf=\"task.inProcess && !task.completed\" class=\"p-2\">\n                <span class=\"badge date-badge badge-success \">In process</span>\n              </div>\n              <div *ngIf=\"!task.inProcess && !task.completed\" class=\"p-2\">\n                <span class=\" badge date-badge badge-secondary \">Waiting</span>\n              </div>\n              <div class=\"p-2\">\n                <span class=\"badge date-badge {{getCompletedLabel(task)}}\">{{task.dueDate}}</span>\n              </div>\n            </div>\n          </div>\n          <div class=\"row mt-1\">\n            <div class=\"col-md-12 d-flex flex-row-reverse\">\n              <div class=\"p-2\">\n                <button class=\"btn btn-sm badge badge-warning \" (click)=\"onTaskDelete($event, task)\">Delete</button>\n              </div>\n              <div *ngIf=\"task.inProcess\" class=\"p-2\">\n                <button class=\"btn btn-sm  badge badge-warning\" (click)=\"onTaskStop($event, task)\">Stop</button>\n              </div>\n              <div *ngIf=\"!task.inProcess\" class=\"p-2\">\n                <button class=\"btn btn-sm  badge badge-warning\" (click)=\"onTaskStart($event, task)\">Start</button>\n              </div>\n              <div *ngIf=\"task.completed\" class=\"p-2\">\n                <button class=\"btn btn-sm badge {{getCompletedLabel(task)}}\" (click)=\"onTaskRestart($event, task)\" >Restart</button>\n              </div>\n              <div *ngIf=\"!task.completed\" class=\"p-2\">\n                <button class=\"btn btn-sm badge {{getCompletedLabel(task)}}\" (click)=\"onTaskCompleted($event, task)\" >Completed</button>\n              </div>\n            </div>\n          </div>\n        </div>\n    </li>\n</ul>\n"
 
 /***/ }),
 
@@ -445,7 +445,7 @@ var TasksListComponent = /** @class */ (function () {
             taskResult.forEach(function (item) { _this.tasks.push(item); });
         });
     };
-    TasksListComponent.prototype.getDueDateLabel = function (task) {
+    TasksListComponent.prototype.getCompletedLabel = function (task) {
         return task.completed ? "badge-success" : "badge-primary";
     };
     TasksListComponent.prototype.onTaskChange = function (event, task) {
@@ -464,6 +464,14 @@ var TasksListComponent = /** @class */ (function () {
     };
     TasksListComponent.prototype.onTaskStart = function (event, task) {
         task.inProcess = true;
+        this.taskService.saveTasks(task).subscribe();
+    };
+    TasksListComponent.prototype.onTaskRestart = function (event, task) {
+        task.completed = false;
+        this.taskService.saveTasks(task).subscribe();
+    };
+    TasksListComponent.prototype.onTaskCompleted = function (event, task) {
+        task.completed = true;
         this.taskService.saveTasks(task).subscribe();
     };
     TasksListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
